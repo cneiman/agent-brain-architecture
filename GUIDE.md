@@ -1,6 +1,6 @@
 # Build Your Own AI Brain 🧠
 
-> A guide for setting up a persistent, memory-enabled AI assistant using [Clawdbot](https://github.com/clawdbot/clawdbot) + Claude. Based on the "Goober Brain" architecture — built through daily use and real mistakes.
+> A guide for setting up a persistent, memory-enabled AI assistant using [Clawdbot](https://github.com/openclaw/openclaw) + Claude. Based on the "Goober Brain" architecture — built through daily use and real mistakes.
 
 ---
 
@@ -320,7 +320,7 @@ clawdhub install <skill-name>
 
 5. **Start small, grow organically.** You don't need 20 skills and 10 cron jobs on day one. Start with SOUL.md, USER.md, and AGENTS.md. Add integrations as you need them.
 
-6. **Patch the crash bug.** In Clawdbot's `dist/infra/unhandled-rejections.js`, the unhandled rejection handler calls `process.exit(1)`. Comment it out and add `--unhandled-rejections=warn` to NODE_OPTIONS. Otherwise transient network failures will kill your agent. (Upstream issue: [#4288](https://github.com/clawdbot/clawdbot/issues/4288))
+6. **Patch the crash bug.** In Clawdbot's `dist/infra/unhandled-rejections.js`, the unhandled rejection handler calls `process.exit(1)`. Comment it out and add `--unhandled-rejections=warn` to NODE_OPTIONS. Otherwise transient network failures will kill your agent. (Upstream issue: [#4288](https://github.com/openclaw/openclaw/issues/4288))
 
 7. **Enable self-restart.** Add `commands.restart: true` to your Clawdbot config so the agent can reboot itself.
 
@@ -376,7 +376,7 @@ clawdhub install <skill-name>
 Clawdbot docs: https://docs.clawd.bot
 Community: https://discord.com/invite/clawd
 Skills marketplace: https://clawdhub.com
-Source: https://github.com/clawdbot/clawdbot
+Source: https://github.com/openclaw/openclaw
 
 ---
 

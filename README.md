@@ -4,7 +4,7 @@
 
 A file architecture for building AI assistants that remember you across sessions. Instead of starting from zero every conversation, your agent wakes up, reads its memory files, and picks up where it left off.
 
-Works with [Clawdbot](https://github.com/clawdbot/clawdbot), Claude, GPT, or any AI platform that supports file access.
+Works with [Clawdbot](https://github.com/openclaw/openclaw), Claude, GPT, or any AI platform that supports file access.
 
 ---
 
@@ -86,7 +86,7 @@ Without it, every context reset means re-explaining your entire setup. With it, 
 
 ## Built With
 
-- [Clawdbot](https://github.com/clawdbot/clawdbot) — AI agent gateway
+- [Clawdbot](https://github.com/openclaw/openclaw) — AI agent gateway
 - [Claude](https://anthropic.com) — but the architecture is model-agnostic
 - Real daily use, real mistakes, real lessons
 
