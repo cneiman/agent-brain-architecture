@@ -33,6 +33,7 @@ node_modules/
 *.log
 .DS_Store
 projects/
+.playwright-cli/
 .env*
 tokens.json
 auth-profiles.json
@@ -137,6 +138,14 @@ You wake up with no memory each session. Files are your continuity:
 2. Update MEMORY.md if anything significant happened
 3. Git add, commit, and push all changes
 4. Update README.md and TOOLS.md if anything changed
+5. Check for other dirty repos and commit/push those too
+
+**"End of Day"** — When your human says "end of day" or "wrap up":
+1. Write a full daily recap to memory/YYYY-MM-DD.md
+2. Update MEMORY.md with anything worth keeping long-term
+3. Update README.md with current project statuses
+4. Commit and push everything
+5. Summarize what was accomplished and what's open for tomorrow
 
 ### RESET.md — Integration Reference
 
@@ -190,6 +199,7 @@ Use cron for tasks that need exact timing. Recommended starting set:
 |----------|------|
 | Daily morning | Briefing: weather, email summary, calendar, tasks |
 | Daily evening | Recap: what happened today, open items |
+| Daily late evening | README refresh: update project statuses, commit+push (silent) |
 | Weekly (Sunday) | Review: task board check-in, week ahead preview |
 
 ### Heartbeat vs Cron Decision
@@ -345,6 +355,18 @@ This is the single most important pattern. Without RESET.md, every context compa
 - Docs: https://docs.clawd.bot
 - Known bug: `dist/infra/unhandled-rejections.js` has `process.exit(1)` on unhandled rejections. Patch it to warn-only or add `--unhandled-rejections=warn` to NODE_OPTIONS. Otherwise transient network errors kill the process.
 - Enable self-restart: `commands.restart: true` in gateway config
+
+### Cron Job Gotchas
+- **Never use `model: ""`** (empty string) for cron jobs — it silently breaks. Use `model: "default"` to inherit the gateway default.
+- **Stagger cron times.** Two jobs at the same time = one gets dropped. Space them 5-15 minutes apart.
+- **Memory search needs an embedding key.** Semantic recall via `memory_search` requires an OpenAI or Google API key for embeddings. Without it, memory search is disabled. Note this in RESET.md.
+
+### Recommended CLI Tools
+- **Playwright CLI** (`npm install -g @playwright/cli`): Headless browser with persistent sessions, accessibility snapshots, screenshots, PDFs. Token-efficient. On Linux as root, set `chromiumSandbox: false` in `playwright-cli.json`.
+- **gh** (GitHub CLI): Repos, PRs, issues, CI from the command line.
+
+### Sub-Agents for Parallel Work
+If your platform supports spawning sub-sessions (e.g., Clawdbot's `sessions_spawn`), use them for independent parallel tasks — research, code analysis, bulk operations. They run in isolated sessions and report back when done. Great for anything that would otherwise block your main conversation.
 
 ### If using another platform
 The file architecture (SOUL.md, AGENTS.md, memory/, etc.) works anywhere. Adapt the automation layer (cron, heartbeats) to whatever your platform supports. The core principle — files as memory, structured identity, proactive behavior — is platform-agnostic.

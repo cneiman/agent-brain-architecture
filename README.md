@@ -67,6 +67,7 @@ Without it, every context reset means re-explaining your entire setup. With it, 
 ## Key Principles
 
 - **Files are memory.** "Mental notes" don't survive session restarts. Files do.
+- **Stagger your automations.** Two cron jobs at the same time = one gets dropped.
 - **Identity drives behavior.** A specific SOUL.md produces a specific personality. Generic instructions produce generic responses.
 - **Document everything.** Mistakes, integrations, quirks, lessons. Future-you will thank present-you.
 - **Proactive > reactive.** A good agent checks in, does background work, and surfaces important things without being asked.

@@ -1,6 +1,6 @@
 # Build Your Own AI Brain 🧠
 
-> A guide for setting up a persistent, memory-enabled AI assistant using [Clawdbot](https://github.com/clawdbot/clawdbot) + Claude. Based on the "Goober Brain" architecture developed at Lazer Technologies.
+> A guide for setting up a persistent, memory-enabled AI assistant using [Clawdbot](https://github.com/clawdbot/clawdbot) + Claude. Based on the "Goober Brain" architecture — built through daily use and real mistakes.
 
 ---
 
@@ -257,6 +257,7 @@ node_modules/
 *.log
 .DS_Store
 projects/
+.playwright-cli/
 
 # Sensitive
 .env*
@@ -293,6 +294,13 @@ Useful starting skills:
 - **calendar** — Calendar management
 - **home-assistant** — Smart home control
 
+### Recommended CLI Tools
+
+These aren't Clawdbot skills but are useful to install globally:
+
+- **Playwright CLI** (`npm install -g @playwright/cli`) — Headless browser automation. Persistent sessions, accessibility snapshots, screenshots, PDFs. Token-efficient alternative to vision-based browser tools.
+- **gh** (GitHub CLI) — Manage repos, PRs, issues, CI from the command line.
+
 Install with:
 ```bash
 clawdhub install <skill-name>
@@ -312,11 +320,23 @@ clawdhub install <skill-name>
 
 5. **Start small, grow organically.** You don't need 20 skills and 10 cron jobs on day one. Start with SOUL.md, USER.md, and AGENTS.md. Add integrations as you need them.
 
-6. **Patch the crash bug.** In Clawdbot's `dist/infra/unhandled-rejections.js`, the unhandled rejection handler calls `process.exit(1)`. Comment it out and add `--unhandled-rejections=warn` to NODE_OPTIONS. Otherwise transient network failures will kill your agent. (Upstream issue: [#4288](https://github.com/moltbot/moltbot/issues/4288))
+6. **Patch the crash bug.** In Clawdbot's `dist/infra/unhandled-rejections.js`, the unhandled rejection handler calls `process.exit(1)`. Comment it out and add `--unhandled-rejections=warn` to NODE_OPTIONS. Otherwise transient network failures will kill your agent. (Upstream issue: [#4288](https://github.com/clawdbot/clawdbot/issues/4288))
 
 7. **Enable self-restart.** Add `commands.restart: true` to your Clawdbot config so the agent can reboot itself.
 
 8. **Give it personality.** The more specific SOUL.md is, the better the agent feels. Generic instructions produce generic responses. Your agent should feel like *yours*.
+
+9. **Stagger your cron jobs.** If two crons fire at the same time, one will get dropped. Space them out by at least 5-15 minutes (e.g., README update at 9:00 PM, journal seed at 9:15 PM).
+
+10. **Always specify a model for cron jobs.** Setting `model: ""` (empty string) will silently break the job. Use `model: "default"` to inherit the gateway default, or specify a model explicitly.
+
+11. **Memory search needs an embedding API key.** Semantic memory recall (`memory_search`) requires an OpenAI or Google API key for embeddings. Without it, memory search is disabled. Document which provider you're using in RESET.md.
+
+12. **Install Playwright CLI for browser automation.** `npm install -g @playwright/cli` gives your agent a token-efficient, headless browser with persistent sessions. Great for testing, form-filling, and checking authenticated sites. Way lighter than full browser tools.
+
+13. **Use sub-agents for parallel work.** If your platform supports spawning sub-sessions (`sessions_spawn`), use them for independent tasks that can run in parallel — code analysis, research, bulk operations. They report back when done.
+
+14. **Auto-maintain your README.** Set up a daily cron to update your workspace README with current project statuses. It's cheap and keeps your repo looking alive without manual effort.
 
 ---
 
@@ -360,4 +380,4 @@ Source: https://github.com/clawdbot/clawdbot
 
 ---
 
-*Built with 🫠 by Goober & Christopher at Lazer Technologies*
+*Built with 🫠 by Goober & Christopher*
